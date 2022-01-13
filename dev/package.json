@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html",
-    "build": "parcel build --public-url /synopse index.html --no-source-maps"
+    "build": "parcel build --public-url /synopse index.html --no-source-maps",
+    "toserver": "cd ~/Dokumente/Editionen/Iwein/iwein-digital.github.io/synopse\nrm arbeitssynopse* general* index.html\n"
   },
   "author": "Gustavo Riva",
   "license": "ISC",
