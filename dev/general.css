@@ -1,0 +1,73 @@
+@font-face {
+    font-family: Junicode;
+    src: url(https://iwein-digital.github.io/synopse/font/junicode-1.002/Junicode.ttf);
+ }
+ @font-face {
+   font-family: Junicode;
+   src: url(https://iwein-digital.github.io/synopse/font/junicode-1.002/Junicode-Bold.ttf);
+   font-weight: bold;
+}
+@font-face {
+   font-family: Junicode;
+   src: url(https://iwein-digital.github.io/synopse/font/junicode-1.002/Junicode-Italic.ttf);
+   font-style: italic;
+}
+@font-face {
+   font-family: Junicode;
+   src: url(https://iwein-digital.github.io/synopse/font/junicode-1.002/Junicode-BoldItalic.ttf);
+   font-weight: bold;
+   font-style: italic;
+ }
+
+* {
+    font-family: Junicode;
+    font-size: 22px;
+}
+
+#versndiv {
+    display: inline-flex;
+    margin-left: 1em;
+}
+
+#versn {
+    width: 6ch;
+    height: 1.5em;
+    margin-left: 0.5em;
+}
+
+#updateVers {
+    height: 2em;
+    margin-left: 1em;
+}
+
+#toggleWit {
+    margin-left: 1em; 
+    cursor: pointer;
+    height: 2em;
+}
+
+#witsel {
+    background-color: rgb(228, 227, 227);
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+.witsellabel {
+    padding-left: 0.5em;
+    margin-left: 0.5em;
+    margin-right: 0.2em;
+    border-left: dashed 1px blue;
+}
+
+.witlabel {
+    font-weight: bold;
+    background-color: rgb(117, 171, 214);
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 150px;
+    float: left;
+}
+
+.verscontent {
+    float: left;
+}
