@@ -1,5 +1,7 @@
 import verses from './synopse.json'
 
+const vollst = ['A', 'B', 'D', 'E', 'J', 'a', 'b', 'c', 'd', 'f', 'l', 'p', 'r', 'u', 'z'];
+
 function updateTexts(){
     $('#texte').empty();
     var selectedVersNummer = $('#versn').val();
@@ -14,8 +16,13 @@ function updateTexts(){
             for (var i=1; i <= distance; i++){
                 var prevVersNumber = getContextVers(orderList, selectedVersNummer, -i);
                 var nextVersNumber = getContextVers(orderList, selectedVersNummer, +i);
-                content_prev += verses['content'][witid][prevVersNumber] + ' / ';
-                content_next += ' / ' + verses['content'][witid][nextVersNumber];    
+                var content_prev_raw = verses['content'][witid][prevVersNumber];
+                console.log(content_prev_raw);
+                if (typeof content_prev_raw == 'undefined'){content_prev_raw = ' – '};
+                content_prev += content_prev_raw + ' / ';
+                var content_next_raw = verses['content'][witid][nextVersNumber];
+                if (typeof content_next_raw == 'undefined'){content_next_raw = ' – '};
+                content_next += ' / ' + content_next_raw;    
             }
             
             // var content_prev = verses['content'][witid][54];
@@ -93,5 +100,20 @@ $(document).ready(function(){
     $('input[name=contextSelCheck]').change(function(){
         updateTexts();
     })
+
+    $('#autoSelWitVoll').on('click', function(){
+        
+        for (var i = 0; i < vollst.length; i++){
+            $('.witselcheck[name=wit_'+vollst[i]+']').prop('checked', true);
+        }
+        
+    })
+
+    
+
+    $('.witlabel').on('click', function(){
+        console.log('click');
+    })
+
 
 })
