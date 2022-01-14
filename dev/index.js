@@ -19,16 +19,16 @@ function updateTexts(){
     for (var i=0; i < order.length; i++){
         if ($('.witselcheck[name=wit_'+order[i]+']').is(':checked')){
             var selector = $('.witselcheck[name=wit_'+order[i]+']');
-            console.log(selector)
             var witid = selector.attr('id');
             var content_main = verses['content'][witid][selectedVersNummer];
             var orderList = verses['order'].filter(y => y['wit'] == witid);
             var distance = $('input[name=contextSelCheck]:checked').val();
             var content_prev = '';
             var content_next = '';
-            for (var d=1; d <= distance; d++){
-                var prevVersNumber = getContextVers(orderList, selectedVersNummer, -i);
-                var nextVersNumber = getContextVers(orderList, selectedVersNummer, +i);
+            for (var d = 1; d <= distance; d++){
+                console.log(d);
+                var prevVersNumber = getContextVers(orderList, selectedVersNummer, - d);
+                var nextVersNumber = getContextVers(orderList, selectedVersNummer, + d);
                 var content_prev_raw = verses['content'][witid][prevVersNumber];
                 if (typeof content_prev_raw == 'undefined'){content_prev_raw = ' – '};
                 content_prev += content_prev_raw + ' / ';
@@ -181,7 +181,6 @@ $(document).ready(function(){
             otherWitElement.attr('value', orderOldValue);
             otherWitElement.val(orderOldValue);
             $(this).attr('value', orderNewValue);
-            console.log(order);
             if (orderNewValue < orderOldValue){
                 order.splice(order.indexOf(otherWit),1);
                 order.splice(order.indexOf(thisWit), 1);
