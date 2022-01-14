@@ -1,6 +1,11 @@
 import verses from './synopse.json'
 
-const vollst = ['A', 'B', 'D', 'E', 'J', 'a', 'b', 'c', 'd', 'f', 'l', 'p', 'r', 'u', 'z'];
+const witGroups = {
+    'alle': new Set(['A', 'B', 'C', 'D', 'E', 'J', 'a', 'b', 'c', 'd', 'f', 'l', 'p', 'r', 'u', 'z', 'F', 'G', 'H', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X1', 'X2', 'e']),
+    'keine': new Set([]),
+    'vollst': new Set(['A', 'B', 'D', 'E', 'J', 'a', 'b', 'c', 'd', 'f', 'l', 'p', 'r', 'u', 'z']),
+    'fragm': new Set(['C','F', 'G', 'H', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X1', 'X2', 'e'])}; 
+
 
 function updateTexts(){
     $('#texte').empty();
@@ -101,12 +106,17 @@ $(document).ready(function(){
         updateTexts();
     })
 
-    $('#autoSelWitVoll').on('click', function(){
-        
-        for (var i = 0; i < vollst.length; i++){
-            $('.witselcheck[name=wit_'+vollst[i]+']').prop('checked', true);
-        }
-        
+    $('.autoSelWitItem').on('click', function(){
+        var which = $(this).attr('data-val');
+        $('.witselcheck').each(function(){
+            var name = $(this).attr('name').substr(4);
+            if (witGroups[which].has(name)){
+                $(this).prop('checked', true)
+            } else {
+                $(this).prop('checked', false)
+            }
+        })
+        updateTexts();
     })
 
     
