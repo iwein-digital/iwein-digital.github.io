@@ -112,7 +112,8 @@ $(document).ready(function(){
         var witclean = witfull.replace('_', ' ').replace('.xml', '');
         var witsigle = witclean.substr(0, witclean.indexOf(' '))
         $('#witsel').append('<div class="col-md-3 col-sm-6"><label class="witsellabel">'+ witclean +'</label>'+
-                            '<input class="witselcheck" type="checkbox" id="'+witfull +'" name="wit_'+witsigle+'" ></div>') 
+                            '<input class="witselcheck" type="checkbox" id="'+witfull +'" name="wit_'+witsigle+'" >'+
+                            '<input type="text" value="'+ parseInt(order.indexOf(witsigle)+1) +'" class="orderSelector"></input></div>') 
     }
     $('#witsel').collapse();
     $('input[name=contextSelCheck][value="1"]').prop("checked", true);
@@ -162,6 +163,38 @@ $(document).ready(function(){
 
     $('.witlabel').on('click', function(){
         console.log('click');
+    })
+    var orderOldValue = 0;
+    $('.orderSelector').on('focus', function(){
+        orderOldValue = $(this).attr('value')
+    })
+
+    $('.orderSelector').on('change', function(){
+        var thisWit = $(this).prev().attr('name').substr(4);
+        var orderNewValue = $(this).val();
+        if (orderNewValue > 34  || orderNewValue < 1){
+            alert('Insert a value between 1 and 34');
+            $(this).val(orderOldValue);
+        } else if (orderNewValue != orderOldValue) {
+            var otherWitElement = $('.orderSelector[value='+orderNewValue+']')
+            var otherWit = otherWitElement.prev().attr('name').substr(4);
+            otherWitElement.attr('value', orderOldValue);
+            otherWitElement.val(orderOldValue);
+            $(this).attr('value', orderNewValue);
+            console.log(order);
+            if (orderNewValue < orderOldValue){
+                order.splice(order.indexOf(otherWit),1);
+                order.splice(order.indexOf(thisWit), 1);
+                order.splice(parseInt(orderNewValue) - 1, 0, thisWit);
+                order.splice(parseInt(orderOldValue) -1 , 0, otherWit);
+            }else {
+                order.splice(order.indexOf(thisWit), 1);
+                order.splice(order.indexOf(otherWit),1);
+                order.splice(parseInt(orderOldValue) -1 , 0, otherWit);
+                order.splice(parseInt(orderNewValue) - 1, 0, thisWit);
+            }
+            updateTexts();
+        }
     })
 
 
