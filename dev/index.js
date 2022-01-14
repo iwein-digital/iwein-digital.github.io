@@ -4,25 +4,32 @@ const witGroups = {
     'alle': new Set(['A', 'B', 'C', 'D', 'E', 'J', 'a', 'b', 'c', 'd', 'f', 'l', 'p', 'r', 'u', 'z', 'F', 'G', 'H', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X1', 'X2', 'e']),
     'keine': new Set([]),
     'vollst': new Set(['A', 'B', 'D', 'E', 'J', 'a', 'b', 'c', 'd', 'f', 'l', 'p', 'r', 'u', 'z']),
-    'fragm': new Set(['C','F', 'G', 'H', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X1', 'X2', 'e'])}; 
+    'fragm': new Set(['C','F', 'G', 'H', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X1', 'X2', 'e'])
+}; 
+
+var order = ['A', 'B', 'D', 'E', 'J', 'a', 'b', 'c', 'd', 'f', 'l', 'p', 'r', 'u', 'z','C','F', 'G', 'H', 'K', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X1', 'X2', 'e'];
+
+
 
 
 function updateTexts(){
     $('#texte').empty();
     var selectedVersNummer = $('#versn').val();
-    $('.witselcheck').each(function(e){
-        if ($(this).is(':checked')){
-            var witid = $(this).attr('id');
+    
+    for (var i=0; i < order.length; i++){
+        if ($('.witselcheck[name=wit_'+order[i]+']').is(':checked')){
+            var selector = $('.witselcheck[name=wit_'+order[i]+']');
+            console.log(selector)
+            var witid = selector.attr('id');
             var content_main = verses['content'][witid][selectedVersNummer];
             var orderList = verses['order'].filter(y => y['wit'] == witid);
             var distance = $('input[name=contextSelCheck]:checked').val();
             var content_prev = '';
             var content_next = '';
-            for (var i=1; i <= distance; i++){
+            for (var d=1; d <= distance; d++){
                 var prevVersNumber = getContextVers(orderList, selectedVersNummer, -i);
                 var nextVersNumber = getContextVers(orderList, selectedVersNummer, +i);
                 var content_prev_raw = verses['content'][witid][prevVersNumber];
-                console.log(content_prev_raw);
                 if (typeof content_prev_raw == 'undefined'){content_prev_raw = ' – '};
                 content_prev += content_prev_raw + ' / ';
                 var content_next_raw = verses['content'][witid][nextVersNumber];
@@ -30,10 +37,7 @@ function updateTexts(){
                 content_next += ' / ' + content_next_raw;    
             }
             
-            // var content_prev = verses['content'][witid][54];
             
-            // var prevVersNummer = verses['order'][witid];
-            // var prevContent = verses['content'][witid][prevVersNummer];
             if (typeof content_main == 'undefined'){
                 content_main = ' – '
             }
@@ -46,8 +50,43 @@ function updateTexts(){
             $('#texte').append('<div class="col-md-12 col-sm-12">'+
                         '<div class="witlabel">'+ witid.replace('.xml', '').replace('_', ' ').substr(0,13) +'</div>'+
                         '<div class="verscontent">'+content_prev + ' <strong style="font-size:larger">' + content_main + '</strong> ' + content_next + '</div></div>')
-        }
-    })
+        } 
+    }
+
+    // $('.witselcheck').each(function(e){
+    //     if ($(this).is(':checked')){
+    //         var witid = $(this).attr('id');
+    //         var content_main = verses['content'][witid][selectedVersNummer];
+    //         var orderList = verses['order'].filter(y => y['wit'] == witid);
+    //         var distance = $('input[name=contextSelCheck]:checked').val();
+    //         var content_prev = '';
+    //         var content_next = '';
+    //         for (var i=1; i <= distance; i++){
+    //             var prevVersNumber = getContextVers(orderList, selectedVersNummer, -i);
+    //             var nextVersNumber = getContextVers(orderList, selectedVersNummer, +i);
+    //             var content_prev_raw = verses['content'][witid][prevVersNumber];
+    //             if (typeof content_prev_raw == 'undefined'){content_prev_raw = ' – '};
+    //             content_prev += content_prev_raw + ' / ';
+    //             var content_next_raw = verses['content'][witid][nextVersNumber];
+    //             if (typeof content_next_raw == 'undefined'){content_next_raw = ' – '};
+    //             content_next += ' / ' + content_next_raw;    
+    //         }
+            
+            
+    //         if (typeof content_main == 'undefined'){
+    //             content_main = ' – '
+    //         }
+    //         if (typeof content_prev == 'undefined'){
+    //             content_prev = ' – '
+    //         }
+    //         if (typeof content_next == 'undefined'){
+    //             content_next = ' – '
+    //         }
+    //         $('#texte').append('<div class="col-md-12 col-sm-12">'+
+    //                     '<div class="witlabel">'+ witid.replace('.xml', '').replace('_', ' ').substr(0,13) +'</div>'+
+    //                     '<div class="verscontent">'+content_prev + ' <strong style="font-size:larger">' + content_main + '</strong> ' + content_next + '</div></div>')
+    //     }
+    // })
 }
 
 function getContextVers(orderList, current, distance){
