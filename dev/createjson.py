@@ -95,7 +95,7 @@ for index, file in enumerate(sorted(os.listdir(tei_folder))):
             final['content'][file[6:]] = result
             final['order'].append({'wit':file[6:], 'order': order}) 
                 
-with codecs.open('EditionIwein/arbeitssynopse/synopse.json', 'w', 'utf-8') as f:
+with codecs.open('iwein-digital.github.io/synopse/synopse.json', 'w', 'utf-8') as f:
     json.dump(final, f)
             
 
